@@ -22,8 +22,6 @@
               content = {
                 type = "luks";
                 name = "crypted";
-                # disable settings.keyFile if you want to use interactive password entry
-                #passwordFile = "/tmp/secret.key"; # Interactive
                 settings = {
                   allowDiscards = true;
                 };
@@ -34,16 +32,22 @@
                     "/root" = {
                       mountpoint = "/";
                       mountOptions = [
+                        "compress=zstd"
+                        "noatime"
                       ];
                     };
                     "/home" = {
                       mountpoint = "/home";
                       mountOptions = [
+                        "compress=zstd"
+                        "noatime"
                       ];
                     };
                     "/nix" = {
                       mountpoint = "/nix";
                       mountOptions = [
+                        "compress=zstd"
+                        "noatime"
                       ];
                     };
                     "/swap" = {
