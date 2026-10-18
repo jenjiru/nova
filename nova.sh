@@ -9,3 +9,4 @@ cd /mnt/etc/nixos
 sudo rm configuration.nix
 sudo curl -LO https://raw.githubusercontent.com/jenjiru/nova/main/configuration.nix
 sudo nixos-install
+sudo nixos-enter --root /mnt
