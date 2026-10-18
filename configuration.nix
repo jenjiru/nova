@@ -13,8 +13,9 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.supportedFilesystems = [ "ntfs" ];
 
-  # networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "btw"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
@@ -45,7 +46,7 @@
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
 
   # Enable sound.
   # services.pulseaudio.enable = true;
@@ -54,6 +55,28 @@
   #   enable = true;
   #   pulse.enable = true;
   # };
+
+  
+# rtkit is optional but recommended
+security.rtkit.enable = true;
+services.pipewire = {
+  enable = true;
+  alsa.enable = true;
+  alsa.support32Bit = true;
+  pulse.enable = true;
+  # If you want to use JACK applications, uncomment this
+  jack.enable = true;
+  extraConfig.pipewire.adjust-sample-rate = {
+        "context.properties" = {
+          "default.clock.rate" = 48000;
+          #"defautlt.allowed-rates" = [ 192000 48000 44100 ];
+          "defautlt.allowed-rates" = [ 48000 ];
+          #"default.clock.quantum" = 32;
+          #"default.clock.min-quantum" = 32;
+          #"default.clock.max-quantum" = 32;
+        };
+      };
+};
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
@@ -87,8 +110,79 @@
   github-desktop
   home-manager
   gnome-keyring
+  waybar
+  wofi
+  hyprshot
+  zsh
+  adw-gtk3
+  bibata-cursors
+  gruvbox-plus-icons
+  ntfs3g
+  # scrounge-ntfs
+  borgbackup
+  bitwarden-desktop
+  nautilus
+  cryptomator
+  nomacs
+  obsidian
+  blender
+  gparted
+  polkit
+  psmisc
+  btop
+  discord
+  xwayland-satellite
+  swww
+  nemo
+  libreoffice-qt6-fresh
+  hyprlock
+  tidal-hifi
+  solaar
+  unityhub
+  obs-studio
+  mangohud
+  protonup
+  carla
+
+  blueman
+  linuxKernel.packages.linux_xanmod_stable.xpadneo
+
+  waypaper
+
+  niri
+  mako
+  fuzzel
+
+  alacritty
+  zsh
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+  zsh-history-substring-search
    ];
 
+
+programs.steam = {
+
+  enable = true;
+  gamescopeSession.enable = true;
+
+  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+};
+
+#  environment.systemPackages = with pkgs; [
+#  mangohud
+#  ];
+
+  programs.gamemode.enable = true;
+
+   programs.niri.enable = true;
+
+   nixpkgs.config.allowUnfree = true;
+   security.polkit.enable = true;
+
+   hardware.xpadneo.enable = true;
 
    services.xserver = {
    enable = true;
@@ -97,6 +191,13 @@
 
    services.displayManager.sddm.enable = true;
 
+   xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    configPackages = [pkgs.xdg-desktop-portal-gtk];
+    config.common.default = "gtk";
+  };
 
    # hyprland
    programs.hyprland = {
@@ -105,6 +206,15 @@
    };
 
 
+#   programs.waybar.enable = true;
+
+#     fileSystems."/home/jen/external" =
+#    { device = "/dev/sdb1";
+#      fsType = "ntfs-3g"; 
+#      options = [ "rw" "uid=theUidOfYourUser"];
+#    };
+
+   # fonts
    fonts.packages = with pkgs; [
    noto-fonts
    noto-fonts-cjk-sans
@@ -115,6 +225,7 @@
    mplus-outline-fonts.githubRelease
    dina-font
    proggyfonts
+   jetbrains-mono
    ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -124,6 +235,36 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+
+  hardware.bluetooth = {
+  enable = true;
+  powerOnBoot = true;
+  settings = {
+    General = {
+      # Shows battery charge of connected devices on supported
+      # Bluetooth adapters. Defaults to 'false'.
+      Experimental = true;
+      # When enabled other devices can connect faster to us, however
+      # the tradeoff is increased power consumption. Defaults to
+      # 'false'.
+      FastConnectable = true;
+    };
+    Policy = {
+      # Enable all controllers when they are found. This includes
+      # adapters present on start as well as adapters that are plugged
+      # in later on. Defaults to 'true'.
+      AutoEnable = true;
+    };
+  };
+};
+
+# fileSystems."/mnt/exfatDrive" = {
+#  device = "/dev/disk/by-uuid/8867-1FA3";
+#  fsType = "exfat";
+#  options = [ "users" "nofail" ];
+#};
+
+
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
