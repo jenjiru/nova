@@ -132,7 +132,7 @@ services.pipewire = {
   btop
   discord
   xwayland-satellite
-  swww
+  awww
   nemo
   libreoffice-qt6-fresh
   hyprlock
@@ -141,7 +141,7 @@ services.pipewire = {
   unityhub
   obs-studio
   mangohud
-  protonup
+  protonup-ng
   carla
 
   blueman
@@ -218,7 +218,7 @@ programs.steam = {
    fonts.packages = with pkgs; [
    noto-fonts
    noto-fonts-cjk-sans
-   noto-fonts-emoji
+   noto-fonts-color-emoji
    liberation_ttf
    fira-code
    fira-code-symbols
