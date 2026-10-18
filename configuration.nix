@@ -91,7 +91,7 @@ services.pipewire = {
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.jen = {
+  users.users.jenna = {
     isNormalUser = true;
     extraGroups = [ "wheel" "input" "networkmanager" ]; # Enable ‘sudo’ for the user.
   #   packages = with pkgs; [
