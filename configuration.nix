@@ -11,9 +11,18 @@
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = [ "ntfs" ];
+  #boot.loader.systemd-boot.enable = true;
+  #boot.loader.efi.canTouchEfiVariables = true;
+  #boot.supportedFilesystems = [ "ntfs" ];
+
+  boot.loader = {
+	grub = {
+		enable = true;
+		device = "nodev";
+		efiSupport = true;
+	};
+	efi.canTouchEfiVariables = true;
+  };
 
   networking.hostName = "btw"; # Define your hostname.
   # Pick only one of the below networking options.
